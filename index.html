@@ -5,34 +5,58 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Portfolio</title>
-  <style>
-    .main {
-      text-align: center;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div id="loading">
     Loading...
   </div>
-  <div class="main" id="mainContainer" hidden>
-    <img height="100" width="100" id="profileImage" />
-    <h2 id="fullName"></h2>
-    <p id="bio"></p>
-    <h5 id="followersInformation"></h5>
-    <p>Check me on <a id="githubLink">Github</a></p>
-    <a class="twitter-timeline" data-width="300" data-height="400"
-      href="https://twitter.com/iampg1999?ref_src=twsrc%5Etfw">
-      Tweets by iampg1999</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <div class="row" id="mainContainer" hidden>
+    <div class="column">
+      <div class="card" id="profileDetails">
+        <img class="profileImg" id="profileImage" />
+        <div class="card-content">
+          <h2 id="fullName"></h2>
+          <p id="bio"></p>
+          <h4 id="followersInformation"></h4>
+          <p>Check me on</p>
+          <a id="githubLink"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" /></a>
+          <a href="https://www.linkedin.com/in/pawanlal-ganesh-5b082a1aa/"><img
+              src="https://img.icons8.com/cute-clipart/50/000000/linkedin.png" /></a>
+          <a href="https://stackoverflow.com/users/13596745/pawanlal-ganesh"><img
+              src="https://img.icons8.com/color/48/000000/stackoverflow.png" /></a>
+          <a id="twiiterLink"><img src="https://img.icons8.com/fluent/48/000000/twitter.png" /></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card" id="myProject">
+        <div class="card-content">
+          <h2>My Projects</h2>
+          <div id="projectList">
+          </div>
+          <h4>More project comming soon...</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <a class="twitter-timeline" data-width="100%" data-height="750"
+          href="https://twitter.com/iampg1999?ref_src=twsrc%5Etfw">
+          Tweets by iampg1999</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+    </div>
   </div>
 
   <script>
     fetch("https://api.github.com/users/pawanlal")
       .then((response) => response.json())
       .then(function (data) {
-        console.log(data);
+        //console.log(data);
         let followersCount = data["followers"];
         let followersInfo = `I have been followed by ${followersCount} awesome People on Github`;
         document.getElementById("profileImage").src = data["avatar_url"];
@@ -42,7 +66,22 @@
         document.getElementById("githubLink").href = data["html_url"];
         document.getElementById("mainContainer").hidden = false;
         document.getElementById("loading").hidden = true;
+        let twitterProfile = "https://twitter.com/";
+        document.getElementById('twiiterLink').href = twitterProfile + data['twitter_username']
       });
+
+    fetch('https://api.github.com/users/Pawanlal/repos?page=1&per_page=100')
+      .then(response => response.json())
+      .then(function (data) {
+        //console.log(data)
+        var repos = "";
+        var i;
+        for (i = 0; i < data.length; i += 1) {
+          //console.log(data[i]['name']);
+          repos += "<h4>" + "Project: " + data[i]['name'] + "</h4>" + "<p>" + data[i]['description'] + "</p>" + "<hr/>";
+        }
+        document.getElementById('projectList').innerHTML = repos;
+      })
   </script>
 </body>
 
