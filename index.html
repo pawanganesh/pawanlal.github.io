@@ -9,8 +9,8 @@
 </head>
 
 <body>
-  <div id="loading">
-    Loading...
+  <div class="loading" id="loading">
+
   </div>
   <div class="row" id="mainContainer" hidden>
     <div class="column">
@@ -58,7 +58,7 @@
       .then(function (data) {
         //console.log(data);
         let followersCount = data["followers"];
-        let followersInfo = `I have been followed by ${followersCount} awesome People on Github`;
+        let followersInfo = `I have been followed by ${followersCount} awesome people on Github`;
         document.getElementById("profileImage").src = data["avatar_url"];
         document.getElementById("fullName").textContent = data["name"];
         document.getElementById("bio").textContent = data["bio"];
